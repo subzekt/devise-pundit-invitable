@@ -23,6 +23,13 @@ class User < ApplicationRecord
   validates :password, length: { in: 4..20 }, on: :update, allow_blank: true
   validates_confirmation_of :password, if: :password_required?
 
+
+  ########################################
+  # Attributes
+  # Virtual attribute for authenticating by either username or email
+  # This is in addition to a real persisted field like 'username'
+  attr_accessor :login
+
   ########################################
   # Methods
   def self.find_for_database_authentication(warden_conditions)

@@ -1,13 +1,22 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-
+  include Pundit
   # Callbacks
   before_action :authenticate_user!, :unless => :devise_controller?
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   before_action :setup_user_for_system, :unless => :devise_controller?
 
+  # pundit authorization skip for devise controllers
+  after_action :verify_authorized, :unless => :devise_controller?
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   private
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_to(request.referrer || root_path)
+  end
 
   def configure_permitted_parameters
     added_attrs = [:username, :email, :password, :password_confirmation, :remember_me]
