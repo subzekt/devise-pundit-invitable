@@ -1,8 +1,8 @@
 import ReactOnRails from 'react-on-rails';
 
-import SmartAppApp from './SmartAppApp';
+import App from './App';
 
 // This is how react_on_rails can see the SmartApp in the browser.
 ReactOnRails.register({
-  SmartAppApp,
+  App,
 });

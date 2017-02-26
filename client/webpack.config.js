@@ -24,6 +24,7 @@ const config = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
+      lib: path.join(process.cwd(), 'app', 'lib'),
       react: path.resolve('./node_modules/react'),
       'react-dom': path.resolve('./node_modules/react-dom'),
       'material-ui': path.resolve('./node_modules/material-ui'),
