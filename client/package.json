@@ -7,11 +7,15 @@
     "npm": "4.1.1"
   },
   "scripts": {
+    "test": "NODE_PATH=./app mocha --compilers js:babel-core/register --require ./app/lib/testHelper.js --require ./app/lib/testNullCompiler.js 'app/**/*.spec.@(js|jsx)'",
     "build:test": "webpack --config webpack.config.js",
     "build:production": "NODE_ENV=production webpack --config webpack.config.js",
     "build:development": "webpack -w --config webpack.config.js"
   },
-  "cacheDirectories": ["node_modules", "client/node_modules"],
+  "cacheDirectories": [
+    "node_modules",
+    "client/node_modules"
+  ],
   "dependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.18.0",
@@ -33,5 +37,10 @@
     "webpack": "^1.14.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-immutable": "^1.6.0",
+    "jsdom": "^9.11.0",
+    "mocha": "^3.2.0",
+    "react-addons-test-utils": "^15.4.2"
   }
 }
