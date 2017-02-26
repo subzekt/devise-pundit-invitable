@@ -65,3 +65,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'pundit'
 gem 'devise_invitable', '~> 1.7.0'
+gem "react_on_rails", "~> 6"
