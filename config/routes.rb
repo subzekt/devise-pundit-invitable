@@ -5,5 +5,15 @@ Rails.application.routes.draw do
 
   root to: "root#index"
   # wild card for react router
+
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      as :user do
+        post 'users/sign_in', to: 'sessions#create', as: :sessions_create
+        delete 'users/sign_out', to: 'sessions#destroy', as: :sessions_destroy
+      end
+    end
+  end
+
   get "/*all", to: "root#index"
 end
