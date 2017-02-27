@@ -6,10 +6,8 @@ import { Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import configureStore from '../store/smartStore';
 
-import Layout from '../containers/MasterContainer';
-import Dashboard from '../components/pages/Dashboard';
-import Login from '../components/session/Login';
-import Logout from '../components/session/Logout';
+import routes from '../routes/routes'
+
 
 
 injectTapEventPlugin();
@@ -27,11 +25,7 @@ export default (props, _railsContext) => {
     <Provider store={store}>
       <Router history={history}
               onUpdate={() => window.scrollTo(0, 0)}  >
-        <Route path="/" component={Layout}>
-          <IndexRoute component={Dashboard} />
-          <Route path="login" component={Login} />
-          <Route path="logout" component={Logout} />
-        </Route>
+        {routes}
       </Router>
     </Provider>
   );

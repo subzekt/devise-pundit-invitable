@@ -186,12 +186,8 @@ class Layout extends Component {
       styles.footer.paddingLeft = 256;
     }
     let sessionMarkup =
-      !isAuthenticated ?
-        <Login
-          errorMessage={errorMessage}
-          onLoginClick={ creds => dispatch(loginUser(creds)) }
-        /> :
-        <Logout onLogoutClick={() => dispatch(logoutUser())} />
+      isAuthenticated ?
+        <Logout onLogoutClick={() => dispatch(logoutUser())} /> : ''
 
     return (
       <div>
@@ -223,7 +219,14 @@ class Layout extends Component {
                 user: user
               })
           ) :
-          ''
+          <div style={prepareStyles(styles.root)}>
+            <div style={prepareStyles(styles.content)}>
+              <Login
+                errorMessage={errorMessage}
+                onLoginClick={ creds => dispatch(loginUser(creds)) }
+              />
+            </div>
+          </div>
         }
         <AppNavDrawer
           style={styles.navDrawer}
