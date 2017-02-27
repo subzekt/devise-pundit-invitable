@@ -1,7 +1,8 @@
+import React from 'react';
 const UrlNotFound = () => (
   <div>
     <h3>
-      Hello!
+      Not Found!
     </h3>
   </div>
 );

@@ -29,17 +29,32 @@ class User < ApplicationRecord
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
 
+
+  enum role: [:user, :supervisor, :manager, :admin]
+
   ########################################
   # Methods
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-    elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+      where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase.strip }]).first
+    elsif conditions.has_key?(:username) || conditions.has_key?(:email) || conditions.has_key?(:authentication_token)
       where(conditions.to_hash).first
     end
   end
 
+  def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = generate_authentication_token
+    end
+  end
+
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
+  end
 
   private
   def valid_email?(email)

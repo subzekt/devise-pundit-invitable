@@ -34,9 +34,9 @@ export default class Login extends Component {
     )
   }
   handleClick(event) {
-    const login = this.refs.login
-    const password = this.refs.password
-    const creds = { login: login.value.trim(), password: password.value.trim() }
+    const login = this.refs.login.getValue()
+    const password = this.refs.password.getValue()
+    const creds = { login: login.trim(), password: password.trim() }
     this.props.onLoginClick(creds)
   }
 }
