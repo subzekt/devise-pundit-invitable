@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :confirmable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,  :authentication_keys => [:login]
+         :recoverable, :rememberable, :trackable, :authentication_keys => [:login]
 
   ########################################
   # Callbacks
@@ -17,7 +17,6 @@ class User < ApplicationRecord
   validates_presence_of   :username, :if => lambda { |o| o.email.blank? }
   validates_presence_of   :email, :if => lambda { |o| o.username.blank? }
   validates_uniqueness_of :email, allow_blank: true
-  # validates_uniqueness_of :email, allow_blank: true, :if => lambda { |o| o.username.blank? }
   validates_format_of     :email, with: /\A[^@]+@[^@]+\z/, allow_blank: true
   validates :password, length: { in: 4..20 }, on: :create
   validates :password, length: { in: 4..20 }, on: :update, allow_blank: true
@@ -29,7 +28,6 @@ class User < ApplicationRecord
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
-
 
   enum role: [:user, :supervisor, :manager, :admin]
 

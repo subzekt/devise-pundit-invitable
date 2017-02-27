@@ -23,6 +23,7 @@ module Api
       def destroy
         auth_token = request.headers['Authorization']
         resource = User.find_for_database_authentication(authentication_token: auth_token)
+
         return invalid_attempt unless resource
 
         resource.authentication_token = nil
