@@ -6,28 +6,31 @@ RSpec.describe User, type: :model do
     expect(subject).to be_valid
   end
 
-  it "is not valid without a username if email is null" do
-    subject.email = nil
-    expect(subject).to_not be_valid
-  end
-  it "is valid when username is present but no email" do
-    subject.email = nil
-    subject.username = 'asd'
-    expect(subject).to be_valid
+  describe "login" do
+    it "is not valid without a username if email is null" do
+      subject.email = nil
+      expect(subject).to_not be_valid
+    end
+    it "is valid when username is present but no email" do
+      subject.email = nil
+      subject.username = 'asd'
+      expect(subject).to be_valid
+    end
+
+    it "is invalid for username already present" do
+      subject.username = "asd"
+      subject.save
+      new_user = build(:user, username: 'asd')
+      expect(new_user).to_not be_valid
+    end
+
+    it "is invalid for email already present" do
+      subject.save
+      new_user = build(:user, username: 'asd')
+      expect(new_user).to_not be_valid
+    end
   end
 
-  it "is invalid for username already present" do
-    subject.username = "asd"
-    subject.save
-    new_user = build(:user, username: 'asd')
-    expect(new_user).to_not be_valid
-  end
-
-  it "is invalid for email already present" do
-    subject.save
-    new_user = build(:user, username: 'asd')
-    expect(new_user).to_not be_valid
-  end
 
   describe "password" do
     it "is invalid for less than 4" do
@@ -46,6 +49,13 @@ RSpec.describe User, type: :model do
       subject.save
       subject.role = subject.class.roles[:admin]
       expect(subject).to be_valid
+    end
+  end
+
+  describe "authentication" do
+    it "generates token" do
+      subject.ensure_authentication_token
+      expect(subject.authentication_token).to_not be_blank
     end
   end
 end

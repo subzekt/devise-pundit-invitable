@@ -29,7 +29,6 @@ class User < ApplicationRecord
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
 
-
   enum role: [:user, :supervisor, :manager, :admin]
 
   ########################################
