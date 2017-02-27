@@ -12,6 +12,11 @@ import Login from '../session/Login'
 import Logout from '../session/Logout'
 import { loginUser, logoutUser } from '../../actions/sessionActionCreators';
 
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import ActionSettings from 'material-ui/svg-icons/action/settings';
+
 class Layout extends Component {
   static propTypes = {
     children: PropTypes.node,
@@ -186,8 +191,14 @@ class Layout extends Component {
       styles.footer.paddingLeft = 256;
     }
     let sessionMarkup =
-      isAuthenticated ?
-        <Logout onLogoutClick={() => dispatch(logoutUser())} /> : ''
+      isAuthenticated &&
+        <IconMenu
+          iconButtonElement={<IconButton><ActionSettings /></IconButton>}
+          anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+          targetOrigin={{horizontal: 'right', vertical: 'top'}}
+        >
+          <MenuItem primaryText="Sign Out" onTouchTap={() => dispatch(logoutUser())}/>
+        </IconMenu>
 
     return (
       <div>
