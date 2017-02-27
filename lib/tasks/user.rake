@@ -5,7 +5,7 @@ namespace :user do
       user = User.find_or_create_by!(email: args.email) do |user|
         user.password = args.password
         user.password_confirmation = args.password
-        user.confirm!
+        user.confirm
       end
 
       if args.role == 'admin'
