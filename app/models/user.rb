@@ -30,6 +30,9 @@ class User < ApplicationRecord
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
 
+
+  enum role: [:user, :supervisor, :manager, :admin]
+
   ########################################
   # Methods
   def self.find_for_database_authentication(warden_conditions)
