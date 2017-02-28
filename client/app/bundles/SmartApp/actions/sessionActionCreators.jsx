@@ -13,7 +13,7 @@ function requestLogin(creds) {
   return {
     type: LOGIN_REQUEST,
     isFetching: true,
-    isAuthenticated: false,
+    isClientAuthenticated: false,
     creds
   }
 }
@@ -22,7 +22,7 @@ function receiveLogin(user) {
   return {
     type: LOGIN_SUCCESS,
     isFetching: false,
-    isAuthenticated: true,
+    isClientAuthenticated: true,
     user
   }
 }
@@ -31,7 +31,7 @@ function loginError(message) {
   return {
     type: LOGIN_FAILURE,
     isFetching: false,
-    isAuthenticated: false,
+    isClientAuthenticated: false,
     message
   }
 }
@@ -41,7 +41,7 @@ function requestLogout() {
   return {
     type: LOGOUT_REQUEST,
     isFetching: true,
-    isAuthenticated: true
+    isClientAuthenticated: true
   }
 }
 
@@ -49,7 +49,7 @@ function receiveLogout() {
   return {
     type: LOGOUT_SUCCESS,
     isFetching: false,
-    isAuthenticated: false
+    isClientAuthenticated: false
   }
 }
 

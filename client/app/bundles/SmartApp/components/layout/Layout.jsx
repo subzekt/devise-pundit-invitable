@@ -9,7 +9,6 @@ import withWidth, {MEDIUM, LARGE} from 'material-ui/utils/withWidth';
 import Title from 'react-title-component';
 import {Link} from 'react-router'
 import Login from '../session/Login'
-import Logout from '../session/Logout'
 import { loginUser, logoutUser } from '../../actions/sessionActionCreators';
 
 import IconMenu from 'material-ui/IconMenu';
@@ -194,7 +193,7 @@ class Layout extends Component {
       isAuthenticated &&
         <IconMenu
           iconButtonElement={<IconButton><ActionSettings /></IconButton>}
-          anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+          anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
         >
           <MenuItem primaryText="Sign Out" onTouchTap={() => dispatch(logoutUser())}/>

@@ -3,7 +3,10 @@ import Layout from '../components/layout/Layout';
 
 function mapStateToProps(state){
   const { auth } = state;
-  const { isAuthenticated, errorMessage, user } = auth;
+  const { isClientAuthenticated, errorMessage, user } = auth;
+
+  const isAuthenticated = user && isClientAuthenticated;
+
   return {
     user,
     isAuthenticated,

@@ -27,7 +27,5 @@ RSpec.describe Api::V1::SessionsController, type: :request do
     expect(json['email']).to eq user.email
   end
 
-
-
   it "destroys a Session"
 end
