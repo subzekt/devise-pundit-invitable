@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/dashboard/'
+const BASE_URL = 'http://localhost:3000/api/v1'
 
 function callApi(endpoint, authenticated) {
 
@@ -8,7 +8,7 @@ function callApi(endpoint, authenticated) {
   if(authenticated) {
     if(token) {
       config = {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { 'Authorization': `${token}` }
       }
     } else {
       throw "No token saved!"
@@ -23,7 +23,6 @@ function callApi(endpoint, authenticated) {
       if (!response.ok) {
         return Promise.reject(text)
       }
-
       return text
     }).catch(err => console.log(err))
 }

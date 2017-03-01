@@ -106,8 +106,8 @@ class AppNavDrawer extends Component {
                 >
                   { user.role == 'admin' ? (
                     <ListItem
-                      primaryText="Manage Users"
-                      value = '/dashboard/users'
+                      primaryText="Users"
+                      value = '/users'
                     />
 
                   ) : '' }

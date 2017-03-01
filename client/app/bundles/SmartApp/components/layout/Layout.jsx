@@ -170,7 +170,8 @@ class Layout extends Component {
     const router = this.context.router;
     const styles = this.getStyles();
     const title =
-      router.isActive('/dashboard') ? 'Dashboard' : '';
+      router.isActive('/dashboard') ? 'Dashboard' :
+        router.isActive('/users')? 'Users': '';
 
     let docked = false;
     let showMenuIconButton = true;
