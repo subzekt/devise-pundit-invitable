@@ -4,7 +4,7 @@ import {
 
 export const authInitialState = {
   isFetching: false,
-  isAuthenticated: localStorage.getItem('smart_token') ? true : false,
+  isClientAuthenticated: localStorage.getItem('smart_token') ? true : false,
   user: {}
 };
 
@@ -13,26 +13,26 @@ export function auth(state = authInitialState, action) {
     case LOGIN_REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
-        isAuthenticated: false,
+        isClientAuthenticated: false,
         user: action.creds
       })
     case LOGIN_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        isAuthenticated: true,
+        isClientAuthenticated: true,
         errorMessage: '',
         user: action.user
       })
     case LOGIN_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
-        isAuthenticated: false,
+        isClientAuthenticated: false,
         errorMessage: action.message
       })
     case LOGOUT_SUCCESS:
       return Object.assign({}, state, {
         isFetching: true,
-        isAuthenticated: false
+        isClientAuthenticated: false
       })
     default:
       return state

@@ -9,12 +9,9 @@ import withWidth, {MEDIUM, LARGE} from 'material-ui/utils/withWidth';
 import Title from 'react-title-component';
 import {Link} from 'react-router'
 import Login from '../session/Login'
-import { loginUser, logoutUser } from '../../actions/sessionActionCreators';
+import { loginUser, logoutUser} from '../../actions/sessionActionCreators';
+import TopMenu from '../navigation/TopMenu';
 
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
-import ActionSettings from 'material-ui/svg-icons/action/settings';
 
 class Layout extends Component {
   static propTypes = {
@@ -189,15 +186,6 @@ class Layout extends Component {
       styles.root.paddingLeft = 256;
       styles.footer.paddingLeft = 256;
     }
-    let sessionMarkup =
-      isAuthenticated &&
-        <IconMenu
-          iconButtonElement={<IconButton><ActionSettings /></IconButton>}
-          anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'right', vertical: 'top'}}
-        >
-          <MenuItem primaryText="Sign Out" onTouchTap={() => dispatch(logoutUser())}/>
-        </IconMenu>
 
     return (
       <div>
@@ -206,7 +194,7 @@ class Layout extends Component {
           onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}
           title={title}
           zDepth={0}
-          iconElementRight= {sessionMarkup}
+          iconElementRight= {isAuthenticated ? <TopMenu onLogoutClick={() => dispatch(logoutUser())} /> : null}
           style={styles.appBar}
           showMenuIconButton={showMenuIconButton}
         />
