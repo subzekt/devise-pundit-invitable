@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import {
   LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
-  LOGOUT_REQUEST,LOGOUT_SUCCESS
+  LOGOUT_REQUEST,LOGOUT_SUCCESS,
 } from '../constants/sessionConstants';
 
 

@@ -154,6 +154,10 @@ class Layout extends Component {
     });
   };
 
+  dispatchHelper =(func) => {
+    this.props.dispatch(func)
+  };
+
   render() {
 
     const { location, children, dispatch, user, isAuthenticated, errorMessage} = this.props;
@@ -170,7 +174,8 @@ class Layout extends Component {
     const router = this.context.router;
     const styles = this.getStyles();
     const title =
-      router.isActive('/dashboard') ? 'Dashboard' : '';
+      router.isActive('/dashboard') ? 'Dashboard' :
+        router.isActive('/users')? 'Users': '';
 
     let docked = false;
     let showMenuIconButton = true;
@@ -205,7 +210,8 @@ class Layout extends Component {
                   {React.cloneElement(children, {
                     onChangeMuiTheme: this.handleChangeMuiTheme,
                     isAuthenticated: isAuthenticated,
-                    user: user
+                    user: user,
+                    dispatchAction: this.dispatchHelper
                   })}
                 </div>
 

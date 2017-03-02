@@ -1,7 +1,11 @@
 module Api
   module V1
     class ApiController < ActionController::Base
-      before_action :check_authenticate_user!
+      include Pundit
+      # before_action :check_authenticate_user!
+      after_action :verify_authorized, :unless => :devise_controller?
+      rescue_from Pundit::NotAuthorizedError, with: :unauthenticated
+
       respond_to :json
 
       protected
