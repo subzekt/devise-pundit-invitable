@@ -1,10 +1,11 @@
 import React from 'react';
-const User = (user) => (
-  <tr>
-    <td>{user.username}</td>
-    <td>{user.email}</td>
-    <td>{(user.user_access_role || {}).name}</td>
-    <td>{user.temp_password}</td>
-  </tr>
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+
+const User = ({user}) => (
+  <TableRow>
+    <TableRowColumn>{user.username}</TableRowColumn>
+    <TableRowColumn>{user.email}</TableRowColumn>
+    <TableRowColumn>{user.temp_password}</TableRowColumn>
+  </TableRow>
 );
 export default User;
