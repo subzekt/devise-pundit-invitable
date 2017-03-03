@@ -12,7 +12,10 @@ class UsersContainer extends React.Component {
   }
 
   render() {
-    const { items, isFetching } = this.props;
+    const { data } = this.props;
+    const items = data.get('items').toJS();
+    const isFetching = data.get('isFetching');
+
     return (
       <div>
         {isFetching &&
@@ -29,11 +32,8 @@ class UsersContainer extends React.Component {
 
 function mapStateToProps(state){
   const { users } = state;
-  const { items, isFetching } = users;
-
   return {
-    items,
-    isFetching
+    data: users
   }
 };
 
