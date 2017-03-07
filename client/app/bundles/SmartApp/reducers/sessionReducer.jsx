@@ -2,6 +2,7 @@ import {
   LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS,
   REQUEST_USERS, RECEIVE_USERS
 } from '../constants/sessionConstants';
+import Immutable from 'immutable';
 
 export const authInitialState = {
   isFetching: false,
@@ -41,20 +42,15 @@ export function auth(state = authInitialState, action) {
 }
 
 // The quotes reducer
-export function users(state = {
+export function users(state = Immutable.fromJS({
   isFetching: false,
   items: [],
-}, action) {
+}), action) {
   switch (action.type) {
     case REQUEST_USERS:
-      return Object.assign({}, state, {
-        isFetching: true
-      })
+      return state.merge({isFetching: true});
     case RECEIVE_USERS:
-      return Object.assign({}, state, {
-        isFetching: false,
-        items: action.users
-      })
+      return state.merge({isFetching: false, items: action.users});
     default:
       return state
   }

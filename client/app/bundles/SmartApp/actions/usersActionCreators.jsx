@@ -1,8 +1,9 @@
 import {
   REQUEST_USERS, RECEIVE_USERS
 } from '../constants/sessionConstants';
-import axios from 'axios';
-// // Uses the API middlware to get users
+
+import requestsManager from 'lib/requestsManager';//
+// Uses the API middlware to get users
 // export default function fetchUsers() {
 //   return {
 //     [CALL_API]: {
@@ -19,10 +20,10 @@ function requestUsers() {
   }
 }
 
-function receiveUsers(response) {
+function receiveUsers(data) {
   return {
     type: RECEIVE_USERS,
-    users: response.data.users
+    users: data.users
   }
 }
 
@@ -33,15 +34,23 @@ export default function fetchUsers() {
   return dispatch => {
     dispatch(requestUsers());
 
-    return axios.get('/api/v1/users',{
-      // authenticity_token: ReactOnRails.authenticityToken(),
-      headers: { 'Authorization': localStorage.getItem('smart_token')}
-    })
-    .then(function (response) {
-      dispatch(receiveUsers(response))
-    })
-    .catch((err) => function(){
-      console.log("Error: ", err);
-    })
+    return (
+      requestsManager
+        .fetchEntities('users')
+        .then(res => dispatch(receiveUsers(res.data)))
+        .catch(error => console.log("Error: ", error))
+        // .catch(error => dispatch(fetchCommentsFailure(error)))
+    );
+
+    // return axios.get('/api/v1/users',{
+    //   // authenticity_token: ReactOnRails.authenticityToken(),
+    //   headers: { 'Authorization': localStorage.getItem('smart_token')}
+    // })
+    // .then(function (response) {
+    //   dispatch(receiveUsers(response))
+    // })
+    // .catch((err) => function(){
+    //   console.log("Error: ", err);
+    // })
   }
 }
