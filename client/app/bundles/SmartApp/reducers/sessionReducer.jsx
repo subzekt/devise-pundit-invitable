@@ -2,6 +2,10 @@ import {
   LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS,
   REQUEST_USERS, RECEIVE_USERS
 } from '../constants/sessionConstants';
+
+import * as actionTypes from '../constants/userConstants';
+
+
 import Immutable from 'immutable';
 
 export const authInitialState = {
@@ -41,16 +45,44 @@ export function auth(state = authInitialState, action) {
   }
 }
 
-// The quotes reducer
 export function users(state = Immutable.fromJS({
   isFetching: false,
   items: [],
+  isSaving: false,
+  submitUserError: null
 }), action) {
-  switch (action.type) {
-    case REQUEST_USERS:
+
+  const {type, users, user, error} = action;
+
+  switch (type) {
+    case actionTypes.REQUEST_USERS:
       return state.merge({isFetching: true});
-    case RECEIVE_USERS:
-      return state.merge({isFetching: false, items: action.users});
+    case actionTypes.RECEIVE_USERS:
+      return state.merge({isFetching: false, items: users});
+    case actionTypes.SUBMIT_USER_SUCCESS: {
+      return state.withMutations(state => (
+        state
+          .updateIn(
+            ['items'],
+            items => items.unshift(Immutable.fromJS(user)),
+          )
+          .merge({
+            submitUserError: null,
+            isSaving: false,
+          })
+      ));
+    }
+    case actionTypes.SUBMIT_USER_FAILURE: {
+      return state.merge({
+        submitUserError: error,
+        isSaving: false,
+      });
+    }
+    case actionTypes.SET_IS_SAVING: {
+      return state.merge({
+        isSaving: true,
+      });
+    }
     default:
       return state
   }

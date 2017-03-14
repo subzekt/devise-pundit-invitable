@@ -1,6 +1,4 @@
-import {
-  REQUEST_USERS, RECEIVE_USERS
-} from '../constants/sessionConstants';
+import * as actionTypes from '../constants/userConstants';
 
 import requestsManager from 'lib/requestsManager';//
 // Uses the API middlware to get users
@@ -12,23 +10,39 @@ import requestsManager from 'lib/requestsManager';//
 //     }
 //   }
 // }
-
-
 function requestUsers() {
   return {
-    type: REQUEST_USERS,
+    type: actionTypes.REQUEST_USERS,
   }
 }
 
 function receiveUsers(data) {
   return {
-    type: RECEIVE_USERS,
+    type: actionTypes.RECEIVE_USERS,
     users: data.users
   }
 }
 
-// Calls the API to get a token and
-// dispatches actions along the way
+export function setIsSaving() {
+  return {
+    type: actionTypes.SET_IS_SAVING,
+  };
+}
+
+export function submitUserSuccess(user) {
+  return {
+      type: actionTypes.SUBMIT_USER_SUCCESS,
+      user,
+  };
+}
+
+export function submitUserFailure(error) {
+  return {
+      type: actionTypes.SUBMIT_USER_FAILURE,
+      error,
+  };
+}
+
 export default function fetchUsers() {
 
   return dispatch => {
@@ -39,18 +53,18 @@ export default function fetchUsers() {
         .fetchEntities('users')
         .then(res => dispatch(receiveUsers(res.data)))
         .catch(error => console.log("Error: ", error))
-        // .catch(error => dispatch(fetchCommentsFailure(error)))
     );
-
-    // return axios.get('/api/v1/users',{
-    //   // authenticity_token: ReactOnRails.authenticityToken(),
-    //   headers: { 'Authorization': localStorage.getItem('smart_token')}
-    // })
-    // .then(function (response) {
-    //   dispatch(receiveUsers(response))
-    // })
-    // .catch((err) => function(){
-    //   console.log("Error: ", err);
-    // })
   }
+}
+
+export function submitUser(user) {
+  return (dispatch) => {
+    dispatch(setIsSaving());
+    return (
+      requestsManager
+        .submitEntity('users/new',{ user })
+        .then(res => dispatch(submitUserSuccess(res.data)))
+        .catch(error => dispatch(submitUserFailure(error)))
+    );
+  };
 }

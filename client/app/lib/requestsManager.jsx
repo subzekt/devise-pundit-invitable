@@ -24,10 +24,10 @@ export default {
    * @param {Object} entity - Request body to post.
    * @returns {Promise} - Result of ajax call.
    */
-  submitEntity(entity) {
+  submitEntity(entity, endpoint) {
     return request({
       method: 'POST',
-      url: BASE_URL,
+      url: BASE_URL+endpoint,
       responseType: 'json',
       headers: { 'Authorization': `${this.token}` },
       data: entity,
