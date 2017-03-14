@@ -55,6 +55,35 @@ class User < ApplicationRecord
     end
   end
 
+  def invite_or_create
+    if email.present?
+      if valid_email?(email)
+        begin
+          # user is reinvited if already invited
+          user = User._invite(:email => email, :role => :user, :username => username)
+          self.id = user.first.id
+          return true
+        rescue  ActiveRecord::RecordNotUnique  => e
+          self.errors.add(:username, :blank, message: "is already taken")
+          return false
+        end
+      else
+        self.errors.add(:email, :blank, message: "invalid email")
+        return false
+      end
+    else
+      require 'securerandom'
+      temp_password = SecureRandom.hex(3)
+
+      self.role = :user
+      self.password = temp_password
+      self.password_confirmation = temp_password
+      self.confirmed_at = Time.now
+      self.temp_password = temp_password
+      return self.save
+    end
+  end
+
   private
   def valid_email?(email)
     # VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

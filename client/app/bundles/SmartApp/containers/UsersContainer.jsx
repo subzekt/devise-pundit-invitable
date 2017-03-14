@@ -1,19 +1,26 @@
 import { connect } from 'react-redux';
 import Users from '../components/users/index';
 import React, {Component, PropTypes} from 'react';
-import fetchUsers from '../actions/usersActionCreators'
-
+import * as usersActionCreators from '../actions/usersActionCreators'
+import { bindActionCreators } from 'redux';
 
 
 class UsersContainer extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchUsers())
+    this.props.dispatch(usersActionCreators.fetchUsers())
+  }
+
+  handleSubmitUser =(user)=>{
+    this.props.dispatch(submitUser(user))
   }
 
   render() {
-    const { data } = this.props;
-    const items = data.get('items').toJS();
+    const { dispatch, data } = this.props;
+    const actions = bindActionCreators(usersActionCreators, dispatch);
+
+    const users = data.get('items').toJS();
+    const errors = data.get('submitUserError');
     const isFetching = data.get('isFetching');
 
     return (
@@ -21,8 +28,8 @@ class UsersContainer extends React.Component {
         {isFetching &&
           <h2>Loading...</h2>
         }
-        {items.length > 0 &&
-          <Users users={items}/>
+        { users.length > 0 &&
+          <Users {...{ actions, users, errors }} />
         }
       </div>
 

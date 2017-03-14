@@ -49,7 +49,7 @@ export function users(state = Immutable.fromJS({
   isFetching: false,
   items: [],
   isSaving: false,
-  submitUserError: null
+  submitUserError: {}
 }), action) {
 
   const {type, users, user, error} = action;
@@ -67,7 +67,7 @@ export function users(state = Immutable.fromJS({
             items => items.unshift(Immutable.fromJS(user)),
           )
           .merge({
-            submitUserError: null,
+            submitUserError: {},
             isSaving: false,
           })
       ));
