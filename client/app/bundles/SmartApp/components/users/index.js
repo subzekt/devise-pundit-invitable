@@ -53,6 +53,39 @@ export default class Users extends React.Component {
   handleClose = () => {
     this.setState({open: false});
   };
+  handleUserNameChange =(e) => {
+    var newUser = this.state.user;
+    newUser.username = e.target.value;
+    this.setState({user: newUser});
+  }
+
+  handleEmailChange =(e) =>{
+    var newUser = this.state.user;
+    newUser.email = e.target.value;
+    this.setState({user: newUser});
+  }
+
+  handleCreateUser =(e) => {
+    var self = this;
+    e.preventDefault();
+    // self.props.handleSubmitUser(self.state.user);
+    const { actions } = this.props;
+    actions
+      .submitUser(this.state.user)
+      .then(this.resetAndFocus);
+
+  }
+  resetAndFocus =() => {
+
+    var self =  this;
+    if(self.props.errors.size > 0) {
+      self.setState({errors: self.props.errors.toJS()})
+    } else {
+      self.setState({user: {username: '', email: ''}, errors: {}, open: false})
+    }
+  }
+
+
   render() {
     const {users} = this.props;
     var that = this;
@@ -102,10 +135,14 @@ export default class Users extends React.Component {
             <TextField
               errorText={this.state.errors.username}
               floatingLabelText="Username"
+              onChange={this.handleUserNameChange}
+              value={this.state.user.username}
             /><br />
             <TextField
               errorText={this.state.errors.email}
               floatingLabelText="Email"
+              onChange={this.handleEmailChange}
+              value={this.state.user.email}
             /><br />
 
             <FlatButton

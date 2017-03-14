@@ -43,7 +43,7 @@ export function submitUserFailure(error) {
   };
 }
 
-export default function fetchUsers() {
+export  function fetchUsers() {
 
   return dispatch => {
     dispatch(requestUsers());
@@ -62,9 +62,19 @@ export function submitUser(user) {
     dispatch(setIsSaving());
     return (
       requestsManager
-        .submitEntity('users/new',{ user })
+        .submitEntity( {user}, 'users')
         .then(res => dispatch(submitUserSuccess(res.data)))
-        .catch(error => dispatch(submitUserFailure(error)))
+        // .catch(error => function(){
+        //   debugger
+        //   dispatch(submitUserFailure(error))
+        // })
+        .catch(error => {
+          if(error.response != undefined) {
+            dispatch(submitUserFailure(error.response.data.errors))
+          } else {
+            dispatch(submitUserFailure(error))
+          }
+        })
     );
   };
 }

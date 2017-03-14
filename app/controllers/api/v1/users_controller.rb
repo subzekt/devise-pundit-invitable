@@ -11,10 +11,21 @@ module Api
         end
         users = result.limit(10)
 
-        respond_to do |format|
-          format.html
-          format.json { render json: { users: users } }
-        end
+        render json: { users: users }
+      end
+
+      def create
+        @user = User.new(secure_params.reject{|_, v| v.blank?})
+        res = @user.invite_or_create
+
+        render :json => @user, status: :created and return if res
+        render :json => { :errors => @user.errors.messages }, :status => 422 and return
+      end
+
+      private
+
+      def secure_params
+        params.require(:user).permit(:email, :username)
       end
     end
   end
