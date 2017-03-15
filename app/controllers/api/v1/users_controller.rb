@@ -6,12 +6,12 @@ module Api
         query = params[:query]
         result = User.all
         if query.present?
-          result = result.joins(:accounts).where('users.username ILIKE ? OR users.email ILIKE ? OR accounts.name ILIKE ? OR accounts.boid ILIKE ? ',
-                                                 "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
+          result = result.where('users.username ILIKE ? OR users.email ILIKE?',
+                                                 "%#{query}%", "%#{query}%")
         end
-        users = result.limit(10)
-
-        render json: { users: users }
+        users = result.paginate(page: page).order('email ASC, username ASC')
+        pages = users.pages
+        render json: { users: users, pages: pages, page: page }
       end
 
       def create
@@ -26,6 +26,10 @@ module Api
 
       def secure_params
         params.require(:user).permit(:email, :username)
+      end
+
+      def page
+        params[:page] || 1
       end
     end
   end

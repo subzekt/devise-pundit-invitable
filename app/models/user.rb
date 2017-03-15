@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :confirmable, :registerable,
          :recoverable, :rememberable, :trackable, :authentication_keys => [:login]
 
+  include Pageable
   ########################################
   # Callbacks
   before_save :check_password_changed

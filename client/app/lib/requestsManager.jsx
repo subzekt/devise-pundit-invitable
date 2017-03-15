@@ -9,11 +9,12 @@ export default {
    *
    * @returns {Promise} - Result of ajax call.
    */
-  fetchEntities(endpoint) {
+  fetchEntities(endpoint, params) {
     return request({
       method: 'GET',
       url: BASE_URL+endpoint,
       headers: { 'Authorization': `${this.token}` },
+      params: params,
       responseType: 'json',
     });
   },
