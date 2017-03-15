@@ -43,14 +43,15 @@ export function submitUserFailure(error) {
   };
 }
 
-export  function fetchUsers() {
+export  function fetchUsers(query = null) {
+  let params = { query: query};
 
   return dispatch => {
     dispatch(requestUsers());
 
     return (
       requestsManager
-        .fetchEntities('users')
+        .fetchEntities('users', params)
         .then(res => dispatch(receiveUsers(res.data)))
         .catch(error => console.log("Error: ", error))
     );

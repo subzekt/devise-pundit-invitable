@@ -9,6 +9,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import UsersSearchForm from './UsersSearchForm';
 
 let styles = {
   root: {
@@ -85,6 +86,10 @@ export default class Users extends React.Component {
     }
   }
 
+  handleSearch =(query) => {
+    const { actions } = this.props;
+    actions.fetchUsers(query)
+  };
 
   render() {
     const {users} = this.props;
@@ -101,7 +106,9 @@ export default class Users extends React.Component {
     return(
       <Paper  style={styles.paper}>
         <Subheader>Users</Subheader>
-
+        <div>
+          <UsersSearchForm handleSearch={this.handleSearch} />
+        </div>
         <Table selectable={showCheckBoxes} style={styles.table} fixedHeader={false} bodyStyle={{'overflow-x': 'auto'}}>
           <TableHeader displaySelectAll={showCheckBoxes}
                        adjustForCheckbox={showCheckBoxes}

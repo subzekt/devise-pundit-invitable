@@ -25,12 +25,10 @@ class UsersContainer extends React.Component {
 
     return (
       <div>
-        {isFetching &&
-          <h2>Loading...</h2>
-        }
-        { users.length > 0 &&
-          <Users {...{ actions, users, errors }} />
-        }
+        {/*{isFetching &&*/}
+          {/*<h2>Loading...</h2>*/}
+        {/*}*/}
+        <Users {...{ actions, users, errors }} />
       </div>
 
     )
