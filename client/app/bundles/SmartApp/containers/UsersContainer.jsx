@@ -19,16 +19,19 @@ class UsersContainer extends React.Component {
     const { dispatch, data } = this.props;
     const actions = bindActionCreators(usersActionCreators, dispatch);
 
-    const users = data.get('items').toJS();
-    const errors = data.get('submitUserError');
-    const isFetching = data.get('isFetching');
+    const users = data.get('items').toJS(),
+      errors = data.get('submitUserError'),
+      isFetching = data.get('isFetching'),
+      page = data.get('page'),
+      query = data.get('query'),
+      pages = data.get('pages');
 
     return (
       <div>
         {/*{isFetching &&*/}
           {/*<h2>Loading...</h2>*/}
         {/*}*/}
-        <Users {...{ actions, users, errors }} />
+        <Users {...{ actions, users, errors, page, pages, query }} />
       </div>
 
     )

@@ -9,8 +9,9 @@ module Api
           result = result.where('users.username ILIKE ? OR users.email ILIKE?',
                                                  "%#{query}%", "%#{query}%")
         end
+
         users = result.paginate(page: page).order('email ASC, username ASC')
-        pages = users.pages
+        pages = result.pages
         render json: { users: users, pages: pages, page: page }
       end
 
@@ -29,7 +30,7 @@ module Api
       end
 
       def page
-        params[:page] || 1
+        params[:page].to_i || 1
       end
     end
   end

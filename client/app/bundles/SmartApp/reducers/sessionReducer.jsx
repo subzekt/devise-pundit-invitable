@@ -49,16 +49,19 @@ export function users(state = Immutable.fromJS({
   isFetching: false,
   items: [],
   isSaving: false,
-  submitUserError: {}
+  submitUserError: {},
+  page: 1,
+  pages: 1,
+  query: ''
 }), action) {
 
-  const {type, users, user, error} = action;
+  const {type, users, user, error, page, query, pages} = action;
 
   switch (type) {
     case actionTypes.REQUEST_USERS:
       return state.merge({isFetching: true});
     case actionTypes.RECEIVE_USERS:
-      return state.merge({isFetching: false, items: users});
+      return state.merge({isFetching: false, items: users, page: page, query: query, pages: pages});
     case actionTypes.SUBMIT_USER_SUCCESS: {
       return state.withMutations(state => (
         state
