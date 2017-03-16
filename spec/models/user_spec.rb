@@ -2,46 +2,24 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   subject {build(:user)}
-  it "has a valid factory" do
-    expect(subject).to be_valid
-  end
 
-  describe "login" do
-    it "is not valid without a username if email is null" do
-      subject.email = nil
-      expect(subject).to_not be_valid
-    end
-    it "is valid when username is present but no email" do
-      subject.email = nil
-      subject.username = 'asd'
-      expect(subject).to be_valid
+  describe "validations" do
+    it { expect(subject).to be_valid }
+    it { should validate_uniqueness_of(:username).case_insensitive }
+    it { should validate_uniqueness_of(:email).case_insensitive }
+
+    context "email absent but username present" do
+      before { allow(subject).to receive(:email).and_return(nil) }
+      it { expect(subject).to be_valid }
     end
 
-    it "is invalid for username already present" do
-      subject.username = "asd"
-      subject.save
-      new_user = build(:user, username: 'asd')
-      expect(new_user).to_not be_valid
+    context "username absent but email present" do
+      before { allow(subject).to receive(:username).and_return(nil) }
+      it { expect(subject).to be_valid }
     end
 
-    it "is invalid for email already present" do
-      subject.save
-      new_user = build(:user, username: 'asd')
-      expect(new_user).to_not be_valid
-    end
-  end
-
-
-  describe "password" do
-    it "is invalid for less than 4" do
-      subject.password = '123'
-      expect(subject).to_not be_valid
-    end
-
-    it "is invalid for more than 20" do
-      subject.password = '012345678901234567891'
-      expect(subject).to_not be_valid
-    end
+    it { should validate_length_of(:password).is_at_most(20) }
+    it { should validate_length_of(:password).is_at_least(4) }
   end
 
   describe "role" do

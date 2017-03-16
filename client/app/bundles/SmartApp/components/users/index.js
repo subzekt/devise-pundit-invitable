@@ -10,6 +10,8 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import UsersSearchForm from './UsersSearchForm';
+import UltimatePaginationMaterialUi from '../Pagination';
+
 
 let styles = {
   root: {
@@ -69,13 +71,13 @@ export default class Users extends React.Component {
   handleCreateUser =(e) => {
     var self = this;
     e.preventDefault();
-    // self.props.handleSubmitUser(self.state.user);
     const { actions } = this.props;
     actions
       .submitUser(this.state.user)
       .then(this.resetAndFocus);
 
   }
+
   resetAndFocus =() => {
 
     var self =  this;
@@ -89,6 +91,11 @@ export default class Users extends React.Component {
   handleSearch =(query) => {
     const { actions } = this.props;
     actions.fetchUsers(query)
+  };
+
+  handleChangePage =(page) => {
+    const { actions, query } = this.props;
+    actions.fetchUsers(query,page)
   };
 
   render() {
@@ -109,7 +116,7 @@ export default class Users extends React.Component {
         <div>
           <UsersSearchForm handleSearch={this.handleSearch} />
         </div>
-        <Table selectable={showCheckBoxes} style={styles.table} fixedHeader={false} bodyStyle={{'overflow-x': 'auto'}}>
+        <Table selectable={showCheckBoxes} style={styles.table} fixedHeader={false} bodyStyle={{'overflowX': 'auto'}}>
           <TableHeader displaySelectAll={showCheckBoxes}
                        adjustForCheckbox={showCheckBoxes}
           >
@@ -130,8 +137,12 @@ export default class Users extends React.Component {
         <FloatingActionButton onTouchTap={this.handleOpen} >
           <ContentAdd />
         </FloatingActionButton>
-        <br/>
-
+        <br/><br/>
+        <UltimatePaginationMaterialUi
+          currentPage={this.props.page}
+          totalPages={this.props.pages}
+          onChange={this.handleChangePage}
+        />
         <Dialog
           title="New User"
           actions={actions}

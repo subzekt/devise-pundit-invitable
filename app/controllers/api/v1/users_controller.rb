@@ -9,13 +9,15 @@ module Api
           result = result.where('users.username ILIKE ? OR users.email ILIKE?',
                                                  "%#{query}%", "%#{query}%")
         end
+
         users = result.paginate(page: page).order('email ASC, username ASC')
-        pages = users.pages
+        pages = result.pages
         render json: { users: users, pages: pages, page: page }
       end
 
       def create
         @user = User.new(secure_params.reject{|_, v| v.blank?})
+        authorize @user
         res = @user.invite_or_create
 
         render :json => @user, status: :created and return if res
@@ -29,7 +31,7 @@ module Api
       end
 
       def page
-        params[:page] || 1
+        params[:page].to_i || 1
       end
     end
   end

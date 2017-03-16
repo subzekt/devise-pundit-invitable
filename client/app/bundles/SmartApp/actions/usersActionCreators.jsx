@@ -16,10 +16,13 @@ function requestUsers() {
   }
 }
 
-function receiveUsers(data) {
+function receiveUsers(data, query) {
   return {
     type: actionTypes.RECEIVE_USERS,
-    users: data.users
+    users: data.users,
+    page: data.page,
+    pages: data.pages,
+    query: query
   }
 }
 
@@ -43,8 +46,8 @@ export function submitUserFailure(error) {
   };
 }
 
-export  function fetchUsers(query = null) {
-  let params = { query: query};
+export  function fetchUsers(query, page = 1) {
+  let params = { query: query, page: page};
 
   return dispatch => {
     dispatch(requestUsers());
@@ -52,7 +55,7 @@ export  function fetchUsers(query = null) {
     return (
       requestsManager
         .fetchEntities('users', params)
-        .then(res => dispatch(receiveUsers(res.data)))
+        .then(res => dispatch(receiveUsers(res.data, query)))
         .catch(error => console.log("Error: ", error))
     );
   }
