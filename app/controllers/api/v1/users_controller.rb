@@ -17,6 +17,7 @@ module Api
 
       def create
         @user = User.new(secure_params.reject{|_, v| v.blank?})
+        authorize @user
         res = @user.invite_or_create
 
         render :json => @user, status: :created and return if res

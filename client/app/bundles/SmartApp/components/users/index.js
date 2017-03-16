@@ -116,7 +116,7 @@ export default class Users extends React.Component {
         <div>
           <UsersSearchForm handleSearch={this.handleSearch} />
         </div>
-        <Table selectable={showCheckBoxes} style={styles.table} fixedHeader={false} bodyStyle={{'overflow-x': 'auto'}}>
+        <Table selectable={showCheckBoxes} style={styles.table} fixedHeader={false} bodyStyle={{'overflowX': 'auto'}}>
           <TableHeader displaySelectAll={showCheckBoxes}
                        adjustForCheckbox={showCheckBoxes}
           >

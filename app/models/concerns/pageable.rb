@@ -3,7 +3,7 @@ module Pageable
 
   module ClassMethods
     def per_page
-     5
+     10
     end
 
     def pages(per_page = self.per_page )
