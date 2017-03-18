@@ -5,7 +5,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-
 const {
   renderIntoDocument,
   findRenderedDOMComponentWithTag,
@@ -24,8 +23,10 @@ describe('UserList', () => {
   ];
   injectTapEventPlugin();
   const component = renderIntoDocument(
+    <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <UserList users={users} page={1} pages={1}  />
+    </MuiThemeProvider>
 
-    <UserList users={users} page={1} pages={1}  />
   );
 
   it('renders user list component', () => {
@@ -33,13 +34,10 @@ describe('UserList', () => {
     expect(1).to.equal(list.length);
   })
 
-  // {/*<MuiThemeProvider muiTheme={getMuiTheme()}>*/}
-  // {/**/}
-  // {/*</MuiThemeProvider>*/}
   it('renders a list of users in normal order', () => {
     const list = scryRenderedComponentsWithType(component, User);
     expect(1).to.equal(list.length);
-    expect(list[0].props.username).to.equal('test');
-    expect(list[0].props.email).to.equal('test@example.com');
+    expect(list[0].props.user.username).to.equal('test');
+    expect(list[0].props.user.email).to.equal('test@example.com');
   });
 });
