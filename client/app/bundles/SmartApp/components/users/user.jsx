@@ -9,3 +9,15 @@ const User = ({user}) => (
   </TableRow>
 );
 export default User;
+// export default class extends React.Component {
+//   render() {
+//     const {user} = this.props;
+//     return (
+//       <TableRow>
+//         <TableRowColumn>{user.username}</TableRowColumn>
+//         <TableRowColumn>{user.email}</TableRowColumn>
+//         <TableRowColumn>{user.temp_password}</TableRowColumn>
+//       </TableRow>
+//     )
+//   }
+// }
