@@ -194,7 +194,7 @@ class Layout extends Component {
 
     return (
       <div>
-        <Title render="Material-UI" />
+        <Title render="Smart Thing" />
         <AppBar
           onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}
           title={title}
