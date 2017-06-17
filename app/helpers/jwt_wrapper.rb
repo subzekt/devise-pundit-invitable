@@ -15,7 +15,6 @@ module JWTWrapper
   def decode(token)
     begin
       decoded_token = JWT.decode token, Rails.application.secrets.jwt_secret
-
       decoded_token.first
     rescue
       nil
