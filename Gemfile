@@ -69,3 +69,4 @@ gem 'pundit'
 gem 'devise_invitable', '~> 1.7.0'
 gem "react_on_rails", "~> 6"
 gem 'mini_racer', platforms: :ruby
+gem 'jwt'
